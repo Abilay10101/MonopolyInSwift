@@ -19,30 +19,57 @@ while numberOfPlayers < 2 || numberOfPlayers > 4 {
 
 // Создание игроков
 var players = [Player]()
-for i in 1...numberOfPlayers {
-    let playerName = "Player \(i)"
-    let player = Player(name: playerName, balance: 1500000, position: 0)
+for _ in 1...numberOfPlayers {
+    let playerName = readLine()!
+    let player = Player(name: playerName, balance: 2000000, position: 0)
     players.append(player)
 }
 
 // Создание активов
-let asset1 = Asset(name: "Asset 1", groupColor: "Red", price: 150000, baseRent: 10000)
-let asset2 = Asset(name: "Asset 2", groupColor: "Red", price: 150000, baseRent: 15000)
-let asset3 = Asset(name: "Asset 3", groupColor: "Red", price: 150000, baseRent: 15000)
-let chanceCart = Asset(name: "ChanceCart", groupColor: "None", price: 0, baseRent: 0)
-let jail = Asset(name: "Jail", groupColor: "None", price: 0, baseRent: 0)
-let freeParking = Asset(name: "Free Parking", groupColor: "None", price: 0, baseRent: 0)
-let asset5 = Asset(name: "Asset 5", groupColor: "Red", price: 150000, baseRent: 15000)
+let start = Asset(name: "Start", groupColor: "None", price: 0, baseRent: 0)
 
-let jailPosition = Asset.allAssets.firstIndex(where: { $0.name == "Jail" })!
+let asset1 = Asset(name: "Fork", groupColor: "Red", price: 100000, baseRent: 10000)
+let asset2 = Asset(name: "Telegram", groupColor: "Red", price: 100000, baseRent: 10000)
+let asset3 = Asset(name: "Google", groupColor: "Red", price: 100000, baseRent: 10000)
+
+let chanceCart = Asset(name: "ChanceCart", groupColor: "None", price: 0, baseRent: 0)
+
+let asset4 = Asset(name: "Notion", groupColor: "Blue", price: 150000, baseRent: 15000)
+let asset5 = Asset(name: "Bear", groupColor: "Blue", price: 150000, baseRent: 15000)
+let asset6 = Asset(name: "Yandex", groupColor: "Blue", price: 150000, baseRent: 15000)
+
+let chanceCart2 = Asset(name: "ChanceCart", groupColor: "None", price: 0, baseRent: 0)
+
+let asset7 = Asset(name: "Kolesa", groupColor: "Green", price: 200000, baseRent: 20000)
+let asset8 = Asset(name: "Zapis.kz", groupColor: "Green", price: 200000, baseRent: 20000)
+let asset9 = Asset(name: "Kaspi.kz", groupColor: "Green", price: 200000, baseRent: 20000)
+
+let jail = Asset(name: "Jail", groupColor: "None", price: 0, baseRent: 0)
+
+let asset10 = Asset(name: "Tesla", groupColor: "Purple", price: 250000, baseRent: 25000)
+let asset11 = Asset(name: "Ford", groupColor: "Purple", price: 250000, baseRent: 25000)
+let asset12 = Asset(name: "Ferrari", groupColor: "Purple", price: 250000, baseRent: 25000)
+
+let chanceCart3 = Asset(name: "ChanceCart", groupColor: "None", price: 0, baseRent: 0)
+
+let asset13 = Asset(name: "Apple", groupColor: "Yellow", price: 300000, baseRent: 30000)
+let asset14 = Asset(name: "Samsung", groupColor: "Yellow", price: 300000, baseRent: 30000)
+let asset15 = Asset(name: "Xiaomi", groupColor: "Yellow", price: 300000, baseRent: 30000)
+
+let freeParking = Asset(name: "Free Parking", groupColor: "None", price: 0, baseRent: 0)
+
+let asset16 = Asset(name: "nFactorial 1", groupColor: "Brown", price: 350000, baseRent: 35000)
+let asset17 = Asset(name: "nFactorial 2", groupColor: "Brown", price: 350000, baseRent: 35000)
+let asset18 = Asset(name: "nFactorial 3", groupColor: "Brown", price: 350000, baseRent: 35000)
+
+
 
 while players.filter({ $0.balance > 0 }).count > 1 {
     for player in players {
         
         let chanceCards = [
-            ChanceCard(description: "Advance to Go", moveSpaces: 0 - player.position, balanceChange: 0, moveToPosition: 0),
-            ChanceCard(description: "Bank pays you dividend of $500", moveSpaces: 0, balanceChange: 500, moveToPosition: nil),
-            ChanceCard(description: "Pay hospital fees of $1000", moveSpaces: 0, balanceChange: -1000, moveToPosition: nil)
+            ChanceCard(description: "Bank pays you dividend of 1000t", moveSpaces: 0, balanceChange: 1000, moveToPosition: nil),
+            ChanceCard(description: "Pay hospital fees of 1000000t", moveSpaces: 0, balanceChange: -1000000, moveToPosition: nil)
         ].shuffled()
         
         let diceRoll = Int.random(in: 1...6)
@@ -52,7 +79,7 @@ while players.filter({ $0.balance > 0 }).count > 1 {
             print("\(player.name) is in jail.")
             if player.jailRolls >= 3 {
                 print("\(player.name) has been in jail for three turns and must pay $50 to get out.")
-                player.balance -= 50
+                player.balance -= 3000000
                 player.isInJail = false
                 player.jailRolls = 0
             } else {
@@ -71,8 +98,17 @@ while players.filter({ $0.balance > 0 }).count > 1 {
             }
         } else  {
             let currentAsset = Asset.allAssets[player.position % Asset.allAssets.count]
-
-            if currentAsset.owner == nil && currentAsset.name == "ChanceCart" {
+            
+            if (player.position > Asset.allAssets.count) {
+                print("\(player.name) made circle he earns +500 000t")
+                player.position = player.position % Asset.allAssets.count
+                player.balance += 500000
+            }
+            
+            if currentAsset.name == "Start" {
+                print("\(player.name) landed on \(currentAsset.name)")
+            }
+            else if currentAsset.owner == nil && currentAsset.name == "ChanceCart" {
                 print("\(player.name) landed on \(currentAsset.name)")
                 print(chanceCards[0].description)
                 player.position += chanceCards[0].moveSpaces
@@ -103,6 +139,9 @@ while players.filter({ $0.balance > 0 }).count > 1 {
                 }
                 
             }
+            
+            
+            
         }
     }
 }
