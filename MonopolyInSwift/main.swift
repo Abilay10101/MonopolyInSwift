@@ -21,7 +21,7 @@ while numberOfPlayers < 2 || numberOfPlayers > 4 {
 var players = [Player]()
 for i in 1...numberOfPlayers {
     let playerName = "Player \(i)"
-    let player = Player(name: playerName, balance: 150000, position: 0)
+    let player = Player(name: playerName, balance: 1500000, position: 0)
     players.append(player)
 }
 
@@ -29,27 +29,35 @@ for i in 1...numberOfPlayers {
 let asset1 = Asset(name: "Asset 1", groupColor: "Red", price: 150000, baseRent: 10000)
 let asset2 = Asset(name: "Asset 2", groupColor: "Red", price: 150000, baseRent: 15000)
 let asset3 = Asset(name: "Asset 3", groupColor: "Red", price: 150000, baseRent: 15000)
-let asset4 = Asset(name: "Asset 4", groupColor: "Red", price: 150000, baseRent: 15000)
+let asset4 = Asset(name: "ChanceCart", groupColor: "None", price: 0, baseRent: 0)
 let asset5 = Asset(name: "Asset 5", groupColor: "Red", price: 150000, baseRent: 15000)
 
 
 while players.filter({ $0.balance > 0 }).count > 1 {
     for player in players {
         
-        if (players.count == 1) {
-            print("Winner is \(player.name)")
-            break
-        }
+        let chanceCards = [
+            ChanceCard(description: "Advance to Go", moveSpaces: 0 - player.position, balanceChange: 0, moveToPosition: 0),
+            ChanceCard(description: "Bank pays you dividend of $500", moveSpaces: 0, balanceChange: 500, moveToPosition: nil),
+            ChanceCard(description: "Pay hospital fees of $1000", moveSpaces: 0, balanceChange: -1000, moveToPosition: nil)
+        ].shuffled()
         
-        let diceRoll = Int.random(in: 2...6)
+        let diceRoll = Int.random(in: 1...6)
         player.move(numberOfSpaces: diceRoll)
-
+        
         if player.position == 0 {
             player.balance += 500000
         } else  {
             let currentAsset = Asset.allAssets[player.position % Asset.allAssets.count]
 
-            if currentAsset.owner == nil {
+            if currentAsset.owner == nil && currentAsset.name == "ChanceCart" {
+                print("\(player.name) landed on \(currentAsset.name)")
+                print(chanceCards[0].description)
+                player.position += chanceCards[0].moveSpaces
+                player.balance += chanceCards[0].balanceChange
+                
+            }
+            else if currentAsset.owner == nil {
                 // Свободный актив
                 print("\(player.name) landed on \(currentAsset.name)")
                 print("Would you like to buy \(currentAsset.name) for \(currentAsset.price)? (y/n)")
@@ -60,9 +68,11 @@ while players.filter({ $0.balance > 0 }).count > 1 {
                 // Актив, принадлежащий другому игроку
                 print("\(player.name) landed on \(currentAsset.name) which is owned by \(currentAsset.owner!.name)")
                 player.payRent(asset: currentAsset)
+                
                 if player.balance <= 0 {
                     players.removeAll(where: { $0 === player })
                 }
+                
             }
         }
     }
