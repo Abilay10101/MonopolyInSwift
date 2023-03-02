@@ -45,7 +45,6 @@ class Player {
     }
     
     func bankrupt() {
-        //print("\(name) is bankrupt!")
         
         for asset in Asset.allAssets {
             if asset.owner === self {

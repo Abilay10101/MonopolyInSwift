@@ -17,7 +17,8 @@ while numberOfPlayers < 2 || numberOfPlayers > 4 {
     }
 }
 
-// Создание игроков
+print("Write name of players:")
+
 var players = [Player]()
 for _ in 1...numberOfPlayers {
     let playerName = readLine()!
@@ -78,7 +79,7 @@ while players.filter({ $0.balance > 0 }).count > 1 {
         if player.isInJail {
             print("\(player.name) is in jail.")
             if player.jailRolls >= 3 {
-                print("\(player.name) has been in jail for three turns and must pay $50 to get out.")
+                print("\(player.name) has been in jail for three turns and must pay 3000000t to get out.")
                 player.balance -= 3000000
                 player.isInJail = false
                 player.jailRolls = 0
