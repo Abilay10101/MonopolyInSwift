@@ -29,6 +29,7 @@
 		0B696C0E29B0861300DF3482 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		0B696C1029B0865400DF3482 /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		0B696C1229B0A26000DF3482 /* ChanceCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChanceCard.swift; sourceTree = "<group>"; };
+		0B696C1429B0CD1B00DF3482 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		0BFD936F29B07BF300E5EC73 /* MonopolyInSwift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MonopolyInSwift; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BFD937229B07BF300E5EC73 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -47,6 +48,7 @@
 		0BFD936629B07BF300E5EC73 = {
 			isa = PBXGroup;
 			children = (
+				0B696C1429B0CD1B00DF3482 /* README.md */,
 				0BFD937129B07BF300E5EC73 /* MonopolyInSwift */,
 				0BFD937029B07BF300E5EC73 /* Products */,
 			);
