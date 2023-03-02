@@ -11,6 +11,8 @@ class Player {
     var name: String
     var balance: Int
     var position: Int
+    var isInJail: Bool = false
+    var jailRolls: Int = 0
     
     init(name: String, balance: Int, position: Int) {
         self.name = name
@@ -32,17 +34,18 @@ class Player {
     }
     
     func payRent(asset: Asset) {
-        if balance >= asset.rent {
+        if balance > asset.rent {
             balance -= asset.rent
             asset.owner!.balance += asset.rent
         } else {
             print("Not enough money to pay rent to \(asset.owner!.name)")
             bankrupt()
+            balance = 0
         }
     }
     
     func bankrupt() {
-        print("\(name) is bankrupt!")
+        //print("\(name) is bankrupt!")
         
         for asset in Asset.allAssets {
             if asset.owner === self {
